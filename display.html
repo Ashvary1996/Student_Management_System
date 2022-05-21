@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>output</title>
+
+    <style>
+        #container {
+            margin: auto;
+            margin-top: 50px;
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+
+        }
+
+        .box {
+            /* border: 2px solid red; */
+            width: 380px;
+            height: 360px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+        }
+
+        .bimg {
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+            width:185px;
+            height: 140px;
+            margin-left: 5px;
+            
+        }
+
+        .del {
+            background-color: rgba(21, 195, 50, 0.737);
+            padding: 5px;
+            font-size: 10px;
+            cursor: pointer;
+            color: rgba(9, 10, 9, 0.863);
+            font-weight: 200px;
+            font-size: 15px;
+            border-radius: 5px;
+            border: none;
+
+        }
+
+        .del:hover {
+            background-color: red;
+            color: black;
+            
+        }
+        #nav {
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: row;
+            background-color: rgba(255, 127, 80, 0.364);
+            padding: 10px;
+            font-size: 25px;
+
+        }
+        .navbtn{
+            text-decoration: none;
+            /* border-radius: 2px solid black ; */
+
+        }
+        .navbtn:hover{
+            background-color: rgba(111, 69, 69, 0.684);
+            color: black;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nav">
+        <div >
+            <a class="navbtn" href="index.html"> Fill Form</a>
+        </div>
+        <div>
+            <a  class="navbtn"href="display.html">Display Student Form</a>
+        </div>
+        <div>
+            <a class="navbtn"href="student_table.html">Sort Student List</a>
+        </div>
+    </div>
+    
+    <div id="container">
+        <img src="" alt="">
+    </div>
+</body>
+
+</html>
+
+
+
+<script>
+
+    var getData = JSON.parse(localStorage.getItem("formData"))
+
+    // var trash= JSON.parse(localStorage.getItem("trash"))||[];
+    displayData(getData);
+    
+    function displayData(getData) {
+        getData.map(function (elem, index) {
+            var box = document.createElement("div");
+            box.setAttribute("class", "box")
+
+            var name = document.createElement("h3")
+            name.innerText = "Name : " + elem.Name;
+
+            var image = document.createElement("img")
+            image.setAttribute("class", "bimg")
+            image.src = elem.Image;
+
+            var course = document.createElement("h4")
+            course.innerText = "Course : " + elem.Course;
+
+            var unit = document.createElement("h4")
+            unit.innerText = "Unit : " + elem.Unit;
+
+            var batch = document.createElement("h4")
+            batch.innerText = "Batch : " + elem.Batch
+
+            var del = document.createElement("button")
+            del.innerText = "Delete";
+            del.setAttribute("class", "del")
+            del.addEventListener("click", remove)
+
+
+            function remove() {
+
+                document.getElementById("container").innerHTML = "";
+
+                getData.splice(index, 1);
+                localStorage.setItem("formData", JSON.stringify(getData))
+
+                displayData(getData);
+                window.location.reload();
+                console.log("remove trigger")
+
+            }
+
+
+            box.append(image, name, course, batch, unit, del)
+
+            document.getElementById("container").append(box)
+
+        });
+
+    }
+
+
+
+
+</script>
